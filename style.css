@@ -1,0 +1,241 @@
+#languageButton {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+
+    width: 50px;
+    height: 50px;
+    border: none;
+    border-radius: 50%;
+    background-color: #ADD8E6;
+    color: #222;
+    font-size: 14px;
+    font-weight: bold;
+    cursor: pointer;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    visibility: hidden;
+
+    transition: background-color 0.2s ease, transform 0.2s ease;
+    z-index: 1000;
+}
+
+#languageButton:hover {
+    background-color: #91c5d8;
+    transform: scale(1.08);
+}
+
+:root {
+  color-scheme: dark;
+  --background: #1b1b1b;
+  --text: #fff;
+}
+
+* { box-sizing: border-box; }
+html, body { min-height: 100%; margin: 0; }
+
+body {
+  min-height: 100vh;
+  overflow-x: hidden;
+  background: var(--background) url("background.gif") center/cover no-repeat fixed;
+  color: var(--text);
+  font-family: "Onest", sans-serif;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.oldal-kontener {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  max-width: 1000px;
+  margin-top: 100px;
+  padding: 0 20px 50px 20px;
+}
+
+.rolam-doboz {
+  width: 100%;
+  max-width: 600px;
+  padding: 32px 28px;
+  background: rgba(40, 40, 40, 0.42);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 20px;
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  box-shadow: 0 18px 70px rgba(0, 0, 0, 0.25);
+  transform: perspective(1000px) rotateX(0deg) rotateY(0deg) scale3d(1, 1, 1);
+  transform-style: preserve-3d;
+  transition: transform 700ms cubic-bezier(0.03, 0.98, 0.52, 0.99), border-color 300ms ease, box-shadow 300ms ease;
+  will-change: transform;
+  touch-action: pan-y;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  margin-bottom: 40px;
+}
+
+.profil-kep {
+  width: 110px;
+  height: 110px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.25);
+  margin-bottom: 16px;
+  transform: translateZ(24px);
+}
+
+.felhasznalonev {
+  margin: 0 0 10px 0;
+  font-size: 32px;
+  font-weight: 600;
+  text-shadow: 0 0 16px #fff;
+  transform: translateZ(20px);
+}
+
+.gepelt-leiras {
+  margin: 0 0 20px 0;
+  color: rgba(255, 255, 255, 0.75);
+  font-size: 15px;
+  min-height: 24px;
+  font-weight: 500;
+  transform: translateZ(16px);
+}
+
+.kurzor {
+  display: inline-block;
+  font-weight: 300;
+  animation: villog 1s infinite;
+}
+
+@keyframes villog {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0; }
+}
+
+.kozossegi-linkek {
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+  transform: translateZ(20px);
+}
+
+.kozossegi-gomb {
+  width: 44px;
+  height: 44px;
+  display: grid;
+  place-items: center;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.09);
+  color: #fff;
+  transition: transform 200ms ease, background 200ms ease, border-color 200ms ease;
+}
+
+.kozossegi-gomb:hover {
+  transform: translateY(-3px);
+  background: rgba(255, 255, 255, 0.18);
+  border-color: rgba(255, 255, 255, 0.25);
+}
+
+.kozossegi-gomb svg {
+  width: 20px;
+  height: 20px;
+  fill: currentColor;
+}
+
+.racs-kontener {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(300px, 1fr));
+  justify-content: center;
+  gap: 30px;
+  width: 100%;
+}
+
+.dontheto-doboz {
+  padding: 24px 28px;
+  min-height: 180px;
+  background: rgba(40, 40, 40, 0.42);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 20px;
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  box-shadow: 0 18px 70px rgba(0, 0, 0, 0.25);
+  transform: perspective(1000px) rotateX(0deg) rotateY(0deg) scale3d(1, 1, 1);
+  transform-style: preserve-3d;
+  transition: transform 700ms cubic-bezier(0.03, 0.98, 0.52, 0.99), border-color 300ms ease, box-shadow 300ms ease;
+  will-change: transform;
+  touch-action: pan-y;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.dontheto-doboz:hover,
+.rolam-doboz:hover {
+  border-color: rgba(255, 255, 255, 0.23);
+  box-shadow: 0 24px 65px rgba(0, 0, 0, 0.3);
+}
+
+.dontheto-doboz h2, 
+.dontheto-doboz p,
+.doboz-gomb {
+  transform: translateZ(20px);
+}
+
+.dontheto-doboz h2 {
+  margin: 0 0 8px 0;
+  font-size: 20px;
+  font-weight: 600;
+}
+
+.dontheto-doboz p {
+  margin: 0 0 16px 0;
+  color: rgba(255, 255, 255, 0.62);
+  font-size: 13.5px;
+  line-height: 1.5;
+}
+
+.doboz-gomb {
+  align-self: flex-start;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 16px;
+  background: rgba(255, 255, 255, 0.09);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 12px;
+  color: #fff;
+  text-decoration: none;
+  font-size: 13.5px;
+  font-weight: 500;
+  transition: background 200ms ease, transform 200ms ease;
+}
+
+.doboz-gomb:hover {
+  background: rgba(255, 255, 255, 0.17);
+  transform: translateY(-2px);
+}
+
+.doboz-gomb svg {
+  width: 16px;
+  height: 16px;
+  fill: currentColor;
+}
+
+@media (max-width: 768px) {
+  .oldal-kontener { margin-top: 50px; }
+  .racs-kontener { grid-template-columns: 1fr; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .dontheto-doboz, .rolam-doboz {
+    transition: none !important;
+    transform: none !important;
+  }
+}

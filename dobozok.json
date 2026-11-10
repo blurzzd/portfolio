@@ -1,0 +1,17 @@
+[
+  {
+    "cim": "Kitalált cég weboldala",
+    "leiras": "Egy képzeletbeli cég weboldala HTML és CSS használatával. Projektmunka ként készült. IKT órára a csapattal.",
+    "githubLink": "https://github.com/blurzzd/projectmunkaceg"
+  },
+  {
+    "cim": "Div gyakorlás",
+    "leiras": "Ezt programot a div tag gyakorlására készítettem. Programozási alapok órán a feladat volt, hogy készítsünk egy weboldalt, amiben a div tag használatát gyakoroljuk.",
+    "githubLink": "https://github.com/blurzzd/divgyak"
+  },
+  {
+    "cim": "Táblázatok gyakorlás",
+    "leiras": "Ezt programot a táblázatok használatának gyakorlására készült. Programozási alapok órán.",
+    "githubLink": "https://github.com/blurzzd/tablazatgyak"
+  }
+]
