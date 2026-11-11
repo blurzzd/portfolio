@@ -43,8 +43,33 @@ document.addEventListener("DOMContentLoaded", () => {
   const discordBadges = document.getElementById("discord-badges");
   const discordIndicator = document.getElementById("discord-indicator");
   const discordActivity = document.getElementById("discord-activity");
+  
+  const spotifyStatus = document.getElementById("spotify-status");
+  const spotifyCover = document.getElementById("spotify-cover");
+  const spotifySong = document.getElementById("spotify-song");
+  const spotifyArtist = document.getElementById("spotify-artist");
+
+  const customCursor = document.getElementById("custom-cursor");
 
   const DISCORD_USER_ID = "1235266616351260742"; 
+
+  window.addEventListener("mousemove", e => {
+    customCursor.style.transform = `translate(${e.clientX}px, ${e.clientY}px) translate(-50%, -50%)`;
+  });
+
+  const interaktivElemek = document.querySelectorAll("a, button, .dontheto-doboz, .rolam-doboz");
+  interaktivElemek.forEach(elem => {
+    elem.addEventListener("mouseenter", () => {
+      customCursor.style.width = "22px";
+      customCursor.style.height = "22px";
+      customCursor.style.backgroundColor = "rgba(0, 210, 255, 0.2)";
+    });
+    elem.addEventListener("mouseleave", () => {
+      customCursor.style.width = "14px";
+      customCursor.style.height = "14px";
+      customCursor.style.backgroundColor = "#000000";
+    });
+  });
 
   const mondatok = [
     "Helló, én Blurzz vagyok.",
@@ -96,6 +121,7 @@ document.addEventListener("DOMContentLoaded", () => {
         const felhasznalo = adatok.data.discord_user;
         const statusz = adatok.data.discord_status;
         const aktivitások = adatok.data.activities;
+        const spotify = adatok.data.spotify;
 
         discordDisplayName.textContent = felhasznalo.global_name || felhasznalo.display_name || felhasznalo.username;
 
@@ -112,7 +138,7 @@ document.addEventListener("DOMContentLoaded", () => {
         }
 
         if (felhasznalo.clan || felhasznalo.primary_guild) {
-          const klanTag = (felhasznalo.clan && felhasznalo.clan.tag) || (felhasznalo.primary_guild && felhasznalo.primary_guild.identity_guild_id);
+          const klanTag = (felhasznalo.clan && felhasznalo.clan.tag) || (felhasznalo.primary_guild && felhasznalo.primary_guild.tag);
           if (klanTag) {
             discordClanTag.textContent = klanTag;
             discordClanTag.style.display = "inline-block";
@@ -155,6 +181,16 @@ document.addEventListener("DOMContentLoaded", () => {
           discordActivity.textContent = aktivitások[0].name;
         } else {
           discordActivity.textContent = `Online`;
+        }
+
+        // Handle Spotify Now Playing via Lanyard
+        if (adatok.data.listening_to_spotify && spotify) {
+          spotifySong.textContent = spotify.song;
+          spotifyArtist.textContent = spotify.artist;
+          spotifyCover.src = spotify.album_art_url;
+          spotifyStatus.style.display = "flex";
+        } else {
+          spotifyStatus.style.display = "none";
         }
       }
     } catch (hiba) {
@@ -218,8 +254,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
     if (window.DeviceOrientationEvent) {
       window.addEventListener("deviceorientation", esemeny => {
-        const gamma = esemeny.gamma; 
-        const beta = esemeny.beta;   
+        const gamma = esemeny.gamma;
+        const beta = esemeny.beta;
 
         if (gamma !== null && beta !== null) {
           const forgatasY = Math.max(Math.min(gamma * 0.6, 15), -15);
@@ -237,5 +273,5 @@ document.addEventListener("DOMContentLoaded", () => {
   gepelesEffekt();
   adatokBetoltese();
   discordStátuszLekerese();
-  setInterval(discordStátuszLekerese, 30000);
+  setInterval(discordStátuszLekerese, 10000);
 });
