@@ -118,6 +118,119 @@ body {
   50% { opacity: 0; }
 }
 
+.discord-status-doboz {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  width: 100%;
+  max-width: 480px;
+  padding: 14px 18px;
+  margin: 0 auto 20px auto;
+  background: rgba(30, 30, 30, 0.5);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 14px;
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  text-align: left;
+  transform: translateZ(20px);
+}
+
+.discord-avatar-kontener {
+  position: relative;
+  width: 52px;
+  height: 52px;
+  flex-shrink: 0;
+}
+
+.discord-pfp {
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.discord-díszítés {
+  position: absolute;
+  top: -6px;
+  left: -6px;
+  width: 64px;
+  height: 64px;
+  pointer-events: none;
+  z-index: 2;
+}
+
+.discord-jelzo {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  border: 2px solid #1c1c1c;
+  z-index: 3;
+}
+
+.status-online { background: #23a55a; }
+.status-idle { background: #f0b232; }
+.status-dnd { background: #f23f43; }
+.status-offline { background: #80848e; }
+
+.discord-info {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  overflow: hidden;
+  width: 100%;
+}
+
+.discord-nev-sor {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 15px;
+  font-weight: 600;
+  color: #fff;
+  flex-wrap: wrap;
+}
+
+.discord-nev {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.discord-klan-tag {
+  font-size: 11px;
+  padding: 2px 6px;
+  background: rgba(255, 255, 255, 0.12);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 6px;
+  color: rgba(255, 255, 255, 0.85);
+  font-weight: 600;
+  text-transform: uppercase;
+}
+
+.discord-jelvenyek {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.discord-jelveny-ico {
+  width: 16px;
+  height: 16px;
+  object-fit: contain;
+}
+
+.discord-aktivitas {
+  margin: 3px 0 0 0;
+  font-size: 13px;
+  color: rgba(255, 255, 255, 0.62);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
 .kozossegi-linkek {
   display: flex;
   justify-content: center;
