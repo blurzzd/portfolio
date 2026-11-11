@@ -36,6 +36,15 @@ changeLanguage(currentLanguage);
 document.addEventListener("DOMContentLoaded", () => {
   const racsKontener = document.getElementById("racs-kontener");
   const gepeltSzovegElem = document.getElementById("gepelt-szoveg");
+  const discordPfp = document.getElementById("discord-pfp");
+  const discordDecoration = document.getElementById("discord-decoration");
+  const discordDisplayName = document.getElementById("discord-displayname");
+  const discordClanTag = document.getElementById("discord-clan-tag");
+  const discordBadges = document.getElementById("discord-badges");
+  const discordIndicator = document.getElementById("discord-indicator");
+  const discordActivity = document.getElementById("discord-activity");
+
+  const DISCORD_USER_ID = "1235266616351260742"; 
 
   const mondatok = [
     "Helló, én Blurzz vagyok.",
@@ -71,6 +80,87 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     setTimeout(gepelesEffekt, gepelesSebesseg);
+  }
+
+  async function discordStátuszLekerese() {
+    if (DISCORD_USER_ID === "YOUR_DISCORD_USER_ID_HERE") {
+      discordActivity.textContent = "Offline / Set User ID";
+      return;
+    }
+
+    try {
+      const valasz = await fetch(`https://api.lanyard.rest/v1/users/${DISCORD_USER_ID}`);
+      const adatok = await valasz.json();
+
+      if (adatok.success) {
+        const felhasznalo = adatok.data.discord_user;
+        const statusz = adatok.data.discord_status;
+        const aktivitások = adatok.data.activities;
+
+        discordDisplayName.textContent = felhasznalo.global_name || felhasznalo.display_name || felhasznalo.username;
+
+        if (felhasznalo.avatar) {
+          discordPfp.src = `https://cdn.discordapp.com/avatars/${felhasznalo.id}/${felhasznalo.avatar}.png`;
+        }
+
+        if (felhasznalo.avatar_decoration_data) {
+          const díszAsset = felhasznalo.avatar_decoration_data.asset;
+          discordDecoration.src = `https://cdn.discordapp.com/avatar-decoration-presets/${díszAsset}.png`;
+          discordDecoration.style.display = "block";
+        } else {
+          discordDecoration.style.display = "none";
+        }
+
+        if (felhasznalo.clan || felhasznalo.primary_guild) {
+          const klanTag = (felhasznalo.clan && felhasznalo.clan.tag) || (felhasznalo.primary_guild && felhasznalo.primary_guild.identity_guild_id);
+          if (klanTag) {
+            discordClanTag.textContent = klanTag;
+            discordClanTag.style.display = "inline-block";
+          }
+        } else {
+          discordClanTag.style.display = "none";
+        }
+
+        discordBadges.innerHTML = "";
+        if (felhasznalo.public_flags) {
+          const jelvények = [
+            { flag: 1 << 0, icon: "https://cdn.discordapp.com/badge-icons/8a882641373ccd87572c290e7401056a.png" },
+            { flag: 1 << 2, icon: "https://cdn.discordapp.com/badge-icons/70d497e96704618610643030bfe9af90.png" },
+            { flag: 1 << 6, icon: "https://cdn.discordapp.com/badge-icons/bf01d357324e03fbe400d1b96a060d41.png" },
+            { flag: 1 << 7, icon: "https://cdn.discordapp.com/badge-icons/9b31649fda558f44d8253160a0058b73.png" },
+            { flag: 1 << 8, icon: "https://cdn.discordapp.com/badge-icons/45642a923d68427f7f017004f2f451f2.png" },
+            { flag: 1 << 18, icon: "https://cdn.discordapp.com/badge-icons/6bd4563a24e475392d54020f3a96d2e9.png" }
+          ];
+
+          jelvények.forEach(b => {
+            if ((felhasznalo.public_flags & b.flag) !== 0) {
+              const img = document.createElement("img");
+              img.src = b.icon;
+              img.className = "discord-jelveny-ico";
+              discordBadges.appendChild(img);
+            }
+          });
+        }
+
+        discordIndicator.className = "discord-jelzo";
+        if (statusz === "online") discordIndicator.classList.add("status-online");
+        else if (statusz === "idle") discordIndicator.classList.add("status-idle");
+        else if (statusz === "dnd") discordIndicator.classList.add("status-dnd");
+        else discordIndicator.classList.add("status-offline");
+
+        const jatekotJatszik = aktivitások.find(a => a.type === 0);
+        if (jatekotJatszik) {
+          discordActivity.textContent = `Playing ${jatekotJatszik.name}`;
+        } else if (aktivitások.length > 0) {
+          discordActivity.textContent = aktivitások[0].name;
+        } else {
+          discordActivity.textContent = `Online`;
+        }
+      }
+    } catch (hiba) {
+      console.error("Hiba a Discord státusz lekérdezésekor:", hiba);
+      discordActivity.textContent = "Offline";
+    }
   }
 
   async function adatokBetoltese() {
@@ -125,8 +215,27 @@ document.addEventListener("DOMContentLoaded", () => {
         doboz.style.transform = "perspective(1000px) rotateX(0deg) rotateY(0deg) scale3d(1, 1, 1)";
       });
     });
+
+    if (window.DeviceOrientationEvent) {
+      window.addEventListener("deviceorientation", esemeny => {
+        const gamma = esemeny.gamma; 
+        const beta = esemeny.beta;   
+
+        if (gamma !== null && beta !== null) {
+          const forgatasY = Math.max(Math.min(gamma * 0.6, 15), -15);
+          const forgatasX = Math.max(Math.min((beta - 45) * 0.6, 15), -15);
+
+          dobozok.forEach(doboz => {
+            doboz.style.transition = "transform 50ms linear";
+            doboz.style.transform = `perspective(1000px) rotateX(${forgatasX}deg) rotateY(${forgatasY}deg) scale3d(1.02, 1.02, 1.02)`;
+          });
+        }
+      }, true);
+    }
   }
 
   gepelesEffekt();
   adatokBetoltese();
+  discordStátuszLekerese();
+  setInterval(discordStátuszLekerese, 30000);
 });
